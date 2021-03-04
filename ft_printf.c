@@ -13,8 +13,7 @@ static int		ft_count(long long n, int base_len)
 {
 	int i = 1;
 	while (n >= base_len)
-	{
-		n /= base_len;
+	{ n /= base_len;
 		i++;
 	}
 	return (i);
@@ -107,4 +106,10 @@ int		ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	return (res);
+}
+
+int		main(void)
+{
+	ft_printf("Otmane Kimdil %d", 123);
+	return (0);
 }
