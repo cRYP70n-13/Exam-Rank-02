@@ -4,7 +4,6 @@
 #include <sys/uio.h>
 #include <unistd.h>
 
-//and ofc this is my strlen
 size_t	ft_strlen(const char *str)
 {
 	size_t i;
@@ -14,7 +13,6 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-//my strdup
 char	*ft_strdup(char *s)
 {
 	int i = 0;
@@ -30,7 +28,6 @@ char	*ft_strdup(char *s)
 	return (str);
 }
 
-//and this is my strchr
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s != (char)c)
@@ -39,7 +36,6 @@ char	*ft_strchr(const char *s, int c)
 	return (char *)s;
 }
 
-//i should learn how to write substr
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char				*p;
@@ -59,7 +55,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (char *)(p);
 }
 
-//this is my strjoin
 char	*ft_strjoin(char *s1, char *s2)
 {
 
@@ -85,49 +80,49 @@ char	*ft_strjoin(char *s1, char *s2)
 
 int get_next_line(char **line)
 {
-  static char *rest;
-  char buffer[127];
+	static char *rest;
+	char buffer[127];
 
-  if (!rest)
-    rest = ft_strdup("");
-  char *tmp;
-  while (!ft_strchr(rest, '\n'))
-  {
-    int ret = read(0 , buffer, 126);
-    buffer[ret] = '\0';
-    tmp = rest;
-    rest =  ft_strjoin(rest, buffer);
-    free(tmp);
-    if (ret == 0)
-        break ;
-  }
-  if (ft_strchr (rest, '\n'))
-  {
-    char *f = ft_strchr(rest, '\n');
-    int len = f - rest;
+	if (!rest)
+		rest = ft_strdup("");
+	char *tmp;
+	while (!ft_strchr(rest, '\n'))
+	{
+		int ret = read(0 , buffer, 126);
+		buffer[ret] = '\0';
+		tmp = rest;
+		rest =  ft_strjoin(rest, buffer);
+		free(tmp);
+		if (ret == 0)
+			break ;
+	}
+	if (ft_strchr (rest, '\n'))
+	{
+		char *f = ft_strchr(rest, '\n');
+		int len = f - rest;
 
-    *line =  ft_substr(rest, 0, len);
-    tmp = rest;
-    rest = ft_strdup(f + 1);
-    free(tmp);
-    return 1;
-  }
-  else
-  {
-    *line = ft_strdup(rest);
-    free(rest);
-    rest = NULL;
-    return 0;
-  }
+		*line =  ft_substr(rest, 0, len);
+		tmp = rest;
+		rest = ft_strdup(f + 1);
+		free(tmp);
+		return 1;
+	}
+	else
+	{
+		*line = ft_strdup(rest);
+		free(rest);
+		rest = NULL;
+		return 0;
+	}
 }
 
 int main(void)
 {
 
-  char *line;
-  while (get_next_line(&line))
-  {
-    printf("%s\n", line);
-  }
-  return (0);
+	char *line;
+	while (get_next_line(&line))
+	{
+		printf("%s\n", line);
+	}
+	return (0);
 }

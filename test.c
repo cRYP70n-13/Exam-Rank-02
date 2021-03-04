@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-static int		ft_strlen(char *s)
+int		ft_strlen(char *s)
 {
 	int i = 0;
 	while (s[i])
@@ -9,38 +9,33 @@ static int		ft_strlen(char *s)
 	return (i);
 }
 
-static int		ft_count(long long n, int base_len)
+static int ft_count(long long n, int base_len)
 {
 	int i = 1;
-	while (n >= base_len)
-	{
+	while (n >= base_len) {
 		n /= base_len;
 		i++;
 	}
 	return (i);
 }
 
-static void		ft_putnbr(long long n, int base_len, char *base)
+static void ft_putnbr(long long n, int base_len, char *base)
 {
 	if (n >= base_len)
 		ft_putnbr(n / base_len, base_len, base);
 	write(1, &base[n % base_len], 1);
 }
 
-int		ft_printf(const char *format, ...)
+int		ft_printf(char *str, ...)
 {
 	va_list ap;
-	int res = 0, len = 0, prec = 0, flag_prec = 0, neg = 0, zeros = 0, spaces = 0, width = 0, base_len = 0;
 	long num = 0;
-	char *base, *str, *s;
-	va_start(ap, format);
-	str = (char *)format;
-	while (*str)
-	{
-		if (*str == '%')
-		{
+	int width = 0, flag_prec = 0, prec = 0, len = 0, neg = 1, base_len = 0, zeros = 0, spaces = 0, res = 0;
+	char *base, *s;
+	va_start(ap, str);
+	while (*str) {
+		if (*str == '%') {
 			str++;
-			len = 0, prec = 0, flag_prec = 0, neg = 0, zeros = 0, spaces = 0, width = 0, base_len = 0;
 			while (*str <= '9' && *str >= '0')
 			{
 				width = width * 10 + *str - '0';
@@ -106,5 +101,11 @@ int		ft_printf(const char *format, ...)
 		str++;
 	}
 	va_end(ap);
-	return (res);
+	return res;
+}
+
+int		main(void)
+{
+	ft_printf("Otmane Kimdil %d", 123);
+	return (0);
 }
